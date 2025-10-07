@@ -11,6 +11,7 @@ This MCP server allows you to interact with FortiFlex APIs to manage entitlement
 - FortiFlex account with API credentials. You can find more information on how to generate an API key at this link https://docs.fortinet.com/document/forticloud/25.3.a/identity-access-management-iam/927656/api-users
 - Account ID and Program Serial Number
 - MCP-compatible Claude Desktop
+- UV package manager https://docs.astral.sh/uv/getting-started/installation/
 
 ## Installation
 
@@ -22,34 +23,13 @@ git clone https://github.com/your-username/fortiflex-mcp-server.git
 cd fortiflex-mcp-server
 
 # Install dependencies
-pip install -r requirements.txt
+uv sync
+
+# Activate the environment
+source ./.venv/bin/activate
 
 # Run the server
-python server.py
-```
-
-### Option 2: Docker Installation
-
-```bash
-# Build the image
-docker build -t fortiflex-mcp-server .
-
-# Run the container
-docker run -d -p 8080:8080 fortiflex-mcp-server
-```
-
-### Option 3: Multi-Platform Docker Build
-
-```bash
-# Setup buildx
-docker buildx create --name multibuilder --use
-
-# Build for multiple platforms
-docker buildx build \
-  --platform linux/amd64,linux/arm64 \
-  -t your-dockerhub-username/fortiflex-mcp-server:latest \
-  --push \
-  .
+uv run fortiflex_mcp_python.py
 ```
 
 ## Configuration
@@ -58,22 +38,24 @@ docker buildx build \
 
 Add the server to your MCP client configuration file:
 
-**For Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json` on Mac):
+**For Claude Desktop** 
 
-```json
-{
-  "mcpServers": {
-    "fortiflex": {
-      "command": "python",
-      "args": ["/path/to/fortiflex-mcp-server/server.py"],
-      "env": {
-        "FORTIFLEX_API_USER": "your-api-user-id",
-        "FORTIFLEX_API_PASSWORD": "your-api-password",
-        "FORTIFLEX_ACCOUNT_ID": "your-account-id"
-      }
+
+"mcp-fortiflex": {
+    "command": "uv",
+    "args": [
+      "--directory",
+      "your_directory",
+      "run",
+      "fortiflex_mcp_python.py"
+    ],
+    "env": {
+      "FORTIFLEX_API_USER": "API_USER",
+      "FORTIFLEX_API_PASSWORD": "API_PASSWORD",
+      "FORTIFLEX_PROGRAM_SN": "PROGRAM_SERIAL_NUMBER",
+      "FORTIFLEX_ACCOUNT_ID": "ACCOUNT_ID"
     }
-  }
-}
+  },
 ```
 
 ### Environment Variables
@@ -169,7 +151,7 @@ User: What is the token for serial number FGVMMLTM23018252?
 AI: [Searches through entitlements]
 Token: BE5CA53C8245BB46784B
 Status: ACTIVE
-Description: Demo 01 AWS - Anthony
+Description: Demo 01 AWS
 ```
 
 ### Example 3: Regenerate License Token
@@ -201,150 +183,6 @@ Common errors and solutions:
 | Token expired | Token older than 1 hour | Regenerate token |
 | Serial number not found | Invalid SN | Verify serial number exists |
 | Entitlement already stopped | Attempting to stop inactive | Check entitlement status first |
-
-## Development
-
-### Project Structure
-
-```
-fortiflex-mcp-server/
-├── server.py              # Main MCP server
-├── fortiflex_api.py       # FortiFlex API client
-├── tools/                 # Tool implementations
-│   ├── generate_token.py
-│   ├── entitlements.py
-│   └── lifecycle.py
-├── requirements.txt       # Python dependencies
-├── Dockerfile            # Container configuration
-├── docker-compose.yml    # Multi-service setup
-└── README.md             # This file
-```
-
-### Running Tests
-
-```bash
-# Install test dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-pytest tests/
-
-# Run with coverage
-pytest --cov=fortiflex_mcp tests/
-```
-
-### Building Documentation
-
-```bash
-# Generate API docs
-python -m pydoc -w fortiflex_api
-
-# Build Sphinx docs
-cd docs
-make html
-```
-
-## Docker Deployment
-
-### Using Docker Compose
-
-```yaml
-version: '3.8'
-
-services:
-  fortiflex-mcp:
-    build:
-      context: .
-      platforms:
-        - linux/amd64
-        - linux/arm64
-    image: fortiflex-mcp-server:latest
-    environment:
-      - FORTIFLEX_API_USER=${FORTIFLEX_API_USER}
-      - FORTIFLEX_API_PASSWORD=${FORTIFLEX_API_PASSWORD}
-      - FORTIFLEX_ACCOUNT_ID=${FORTIFLEX_ACCOUNT_ID}
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
-```
-
-Run with:
-```bash
-docker-compose up -d
-```
-
-## Security Considerations
-
-- **Never commit API credentials** to version control
-- Use environment variables or secrets management
-- Rotate API credentials regularly
-- Implement rate limiting for production use
-- Use HTTPS for all API communications
-- Store tokens securely with appropriate encryption
-
-## Troubleshooting
-
-### Token Generation Issues
-
-```bash
-# Test API connectivity
-curl -X POST https://support.fortinet.com/ES/api/fortiflex/v2/auth/token \
-  -H "Content-Type: application/json" \
-  -d '{"username":"YOUR_USER","password":"YOUR_PASSWORD"}'
-```
-
-### Entitlement Not Found
-
-- Verify account ID is correct
-- Check if serial number exists in your account
-- Ensure you have proper permissions
-
-### Connection Errors
-
-- Check firewall rules
-- Verify internet connectivity
-- Confirm FortiFlex API endpoint is accessible
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-- **Documentation**: [FortiFlex API Docs](https://docs.fortinet.com/fortiflex)
-- **Issues**: [GitHub Issues](https://github.com/your-username/fortiflex-mcp-server/issues)
-- **Community**: [Fortinet Community](https://community.fortinet.com/)
-
-## Changelog
-
-### Version 1.0.0 (2025-01-XX)
-- Initial release
-- Token generation support
-- Entitlement listing and management
-- VM token operations
-- Multi-platform Docker support
-
-## Acknowledgments
-
-- Fortinet for the FortiFlex API
-- Anthropic for the Model Context Protocol
-- Contributors and community members
-
-## Related Projects
-
-- [MCP Specification](https://github.com/anthropics/mcp)
-- [FortiFlex Documentation](https://docs.fortinet.com/fortiflex)
-- [FortiGate Automation](https://github.com/fortinet/fortinet-automation)
 
 ---
 
