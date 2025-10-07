@@ -19,7 +19,7 @@ This MCP server allows you to interact with FortiFlex APIs to manage entitlement
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/fortiflex-mcp-server.git
+git clone https://github.com/leandro2m/fortiflex-mcp-server.git
 cd fortiflex-mcp-server
 
 # Install dependencies
@@ -45,7 +45,7 @@ Add the server to your MCP client configuration file:
         "command": "uv",
         "args": [
           "--directory",
-          "your_directory",
+          "your_python_code_directory",
           "run",
           "fortiflex_mcp_python.py"
         ],
