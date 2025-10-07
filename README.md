@@ -4,25 +4,13 @@ A Model Context Protocol (MCP) server that provides integration with Fortinet's 
 
 ## Overview
 
-This MCP server allows you to interact with FortiFlex APIs to manage VM-based FortiGate, FortiWeb, and FortiManager entitlements programmatically. It supports token generation, entitlement listing, license activation, and lifecycle management operations.
-
-## Features
-
-- **Authentication**: Generate FortiFlex API access tokens
-- **Entitlement Management**: List and search all entitlements in your account
-- **License Operations**: 
-  - Regenerate VM license tokens
-  - Reactivate stopped entitlements
-  - Stop active entitlements
-- **Multi-Product Support**: FortiGate-VM, FortiWeb-VM, and FortiManager-VM
-- **Cross-Platform**: Compatible with AWS, Azure, GCP, and OCI deployments
+This MCP server allows you to interact with FortiFlex APIs to manage entitlements. It supports token generation, entitlement listing, license activation, and lifecycle management operations.
 
 ## Prerequisites
 
-- FortiFlex account with API credentials
+- FortiFlex account with API credentials. You can find more information on how to generate an API key at this link https://docs.fortinet.com/document/forticloud/25.3.a/identity-access-management-iam/927656/api-users
 - Account ID and Program Serial Number
-- MCP-compatible client (Claude Desktop, etc.)
-- Docker (optional, for containerized deployment)
+- MCP-compatible Claude Desktop
 
 ## Installation
 
