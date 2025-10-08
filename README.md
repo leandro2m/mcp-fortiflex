@@ -174,17 +174,4 @@ The server uses FortiFlex API credentials to authenticate:
 3. Tokens expire after ~1 hour (3660 seconds)
 4. The server automatically handles token generation
 
-## Error Handling
 
-Common errors and solutions:
-
-| Error | Cause | Solution |
-|-------|-------|----------|
-| Authentication failed | Invalid credentials | Check API user ID and password |
-| Token expired | Token older than 1 hour | Regenerate token |
-| Serial number not found | Invalid SN | Verify serial number exists |
-| Entitlement already stopped | Attempting to stop inactive | Check entitlement status first |
-
----
-
-**Note**: This is an unofficial project and is not affiliated with or endorsed by Fortinet.
