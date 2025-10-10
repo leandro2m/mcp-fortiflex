@@ -31,6 +31,26 @@ source ./.venv/bin/activate
 # Run the server
 uv run fortiflex_mcp_python.py
 ```
+### Option 2: Run a docker container
+
+# Choose the correct image for your OS:
+	•	Windows Desktop: use leandro2m/mcp-fortiflex:x86
+	•	Mac (or Linux): use leandro2m/mcp-fortiflex
+"mcpServers": {
+  "fortiflex-mcp-server": {
+    "command": "docker",
+    "args": [
+      "run",
+      "-i",
+      "--rm",
+      "--env", "FORTIFLEX_API_USER=API_USERNAME_HERE",
+      "--env", "FORTIFLEX_API_PASSWORD=PASSWORD_HERE",
+      "--env", "FORTIFLEX_PROGRAM_SN=PROGRAM_SERIAL_NUMBER_HERE",
+      "--env", "FORTIFLEX_ACCOUNT_ID=1308909",
+      "leandro2m/mcp-fortiflex:x86"   // Replace with correct image for your OS
+    ]
+  }
+}
 
 ## Configuration
 
