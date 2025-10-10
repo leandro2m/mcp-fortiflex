@@ -33,7 +33,7 @@ uv run fortiflex_mcp_python.py
 ```
 ### Option 2: Run a docker container
 
-# Choose the correct image for your OS:
+#### Choose the correct image for your OS:
 	•	Windows Desktop: use leandro2m/mcp-fortiflex:x86
 	•	Mac (or Linux): use leandro2m/mcp-fortiflex
 "mcpServers": {
