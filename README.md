@@ -31,6 +31,36 @@ source ./.venv/bin/activate
 # Run the server
 uv run fortiflex_mcp_python.py
 ```
+
+
+## Configuration
+
+
+### Option 1: Run the python code
+
+#### MCP Client Configuration for Claude Desktop
+
+Add the server to your MCP client configuration file:
+
+
+{
+  "mcp-fortiflex": {
+    "command": "uv",
+    "args": [
+      "--directory",
+      "your_python_code_directory",
+      "run",
+      "fortiflex_mcp_python.py"
+    ],
+    "env": {
+      "FORTIFLEX_API_USER": "API_USER",
+      "FORTIFLEX_API_PASSWORD": "API_PASSWORD",
+      "FORTIFLEX_PROGRAM_SN": "PROGRAM_SERIAL_NUMBER",
+      "FORTIFLEX_ACCOUNT_ID": "ACCOUNT_ID"
+    }
+  }
+}
+```
 ### Option 2: Run a docker container
 
 #### Choose the correct image for your OS:
@@ -51,33 +81,6 @@ uv run fortiflex_mcp_python.py
     ]
   }
 }
-
-## Configuration
-
-### MCP Client Configuration
-
-Add the server to your MCP client configuration file:
-
-**For Claude Desktop** 
-
-{
-  "mcp-fortiflex": {
-    "command": "uv",
-    "args": [
-      "--directory",
-      "your_python_code_directory",
-      "run",
-      "fortiflex_mcp_python.py"
-    ],
-    "env": {
-      "FORTIFLEX_API_USER": "API_USER",
-      "FORTIFLEX_API_PASSWORD": "API_PASSWORD",
-      "FORTIFLEX_PROGRAM_SN": "PROGRAM_SERIAL_NUMBER",
-      "FORTIFLEX_ACCOUNT_ID": "ACCOUNT_ID"
-    }
-  }
-}
-```
 
 ### Environment Variables
 
