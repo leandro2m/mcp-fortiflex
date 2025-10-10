@@ -33,15 +33,11 @@ uv run fortiflex_mcp_python.py
 ```
 
 
-## Configuration
-
+## MCP Client Configuration for Claude Desktop
 
 ### Option 1: Run the python code
 
-#### MCP Client Configuration for Claude Desktop
-
 Add the server to your MCP client configuration file:
-
 
 {
   "mcp-fortiflex": {
@@ -60,7 +56,7 @@ Add the server to your MCP client configuration file:
     }
   }
 }
-```
+
 ### Option 2: Run a docker container
 
 #### Choose the correct image for your OS:
