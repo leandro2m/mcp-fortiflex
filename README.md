@@ -57,7 +57,7 @@ Add the server to your MCP client configuration file:
   }
 }
 
-### Option 2: Runs as a docker container
+### Option 2: Runs as a docker desktop container.
 
 #### Choose the correct image for your OS:
 	•	Windows Desktop: use leandro2m/mcp-fortiflex:x86
